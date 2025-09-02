@@ -5,46 +5,60 @@
   <title>Expense Tracker</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-  <div class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-lg">
-    <h1 class="text-2xl font-bold text-center mb-4">💰 Expense Tracker</h1>
+<body class="bg-gradient-to-r from-gray-900 via-gray-800 to-black min-h-screen flex items-center justify-center text-gray-100">
+  <div class="w-full max-w-3xl p-6">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-extrabold tracking-wide">💸 Expense Tracker</h1>
+      <button id="darkToggle" class="px-3 py-1 rounded-lg border border-gray-600 text-sm hover:bg-gray-700 transition">🌙 Dark</button>
+    </div>
 
-    <!-- Balance -->
-    <div class="bg-gray-50 p-4 rounded-xl mb-4 flex justify-between items-center">
-      <span class="text-lg font-medium">Total Balance:</span>
-      <span id="balance" class="text-xl font-bold text-green-600">$0</span>
+    <!-- Balance Card -->
+    <div class="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-xl flex justify-between items-center mb-6 border border-white/20">
+      <span class="text-lg font-medium">Total Balance</span>
+      <span id="balance" class="text-2xl font-extrabold text-green-400 transition-colors">$0</span>
     </div>
 
     <!-- Add Expense Form -->
-    <form id="expense-form" class="space-y-3 mb-6">
-      <input id="desc" type="text" placeholder="Description" 
-        class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
-      
-      <input id="amount" type="number" placeholder="Amount" 
-        class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
+    <form id="expense-form" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+      <div class="relative">
+        <input id="desc" type="text" required
+          class="peer w-full bg-white/10 border border-gray-600 rounded-xl px-3 pt-5 pb-2 text-sm placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <label for="desc" class="absolute left-3 top-2 text-xs text-gray-400 peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm transition-all">Description</label>
+      </div>
 
-      <select id="category" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400">
-        <option>Food</option>
-        <option>Transport</option>
-        <option>Shopping</option>
-        <option>Entertainment</option>
-        <option>Other</option>
-      </select>
+      <div class="relative">
+        <input id="amount" type="number" required
+          class="peer w-full bg-white/10 border border-gray-600 rounded-xl px-3 pt-5 pb-2 text-sm placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <label for="amount" class="absolute left-3 top-2 text-xs text-gray-400 peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm transition-all">Amount</label>
+      </div>
 
-      <button type="submit" 
-        class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+      <div class="relative">
+        <select id="category" 
+          class="w-full bg-white/10 border border-gray-600 rounded-xl px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+          <option>Food</option>
+          <option>Transport</option>
+          <option>Shopping</option>
+          <option>Entertainment</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <button type="submit"
+        class="col-span-1 sm:col-span-3 w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold py-3 rounded-xl shadow-lg hover:scale-[1.02] transition-transform">
         ➕ Add Expense
       </button>
     </form>
 
     <!-- Expense List -->
-    <ul id="expense-list" class="space-y-2"></ul>
+    <div id="expense-list" class="grid gap-4"></div>
   </div>
 
   <script>
     const expenseForm = document.getElementById("expense-form");
     const expenseList = document.getElementById("expense-list");
     const balance = document.getElementById("balance");
+    const darkToggle = document.getElementById("darkToggle");
 
     let totalBalance = 0;
 
@@ -60,33 +74,44 @@
       // Update balance
       totalBalance += amount;
       balance.textContent = "$" + totalBalance;
+      balance.className = "text-2xl font-extrabold transition-colors " + (totalBalance >= 0 ? "text-green-400" : "text-red-400");
 
-      // Create expense item
-      const li = document.createElement("li");
-      li.className = "flex justify-between items-center bg-gray-50 p-3 rounded-lg shadow-sm";
+      // Create expense card
+      const div = document.createElement("div");
+      div.className = "flex justify-between items-center bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl shadow-md hover:scale-[1.01] transition-transform";
 
-      li.innerHTML = `
+      div.innerHTML = `
         <div>
-          <p class="font-medium">${desc}</p>
-          <p class="text-sm text-gray-500">${category}</p>
+          <p class="font-semibold">${desc}</p>
+          <p class="text-sm text-gray-400">${category}</p>
         </div>
-        <div class="flex items-center space-x-3">
-          <span class="font-bold text-red-500">-$${amount}</span>
-          <button class="text-red-600 hover:text-red-800 font-bold">✖</button>
+        <div class="flex items-center space-x-4">
+          <span class="font-bold text-red-400">-$${amount}</span>
+          <button class="px-2 py-1 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white transition">✖</button>
         </div>
       `;
 
       // Delete expense
-      li.querySelector("button").addEventListener("click", function() {
+      div.querySelector("button").addEventListener("click", function() {
         totalBalance -= amount;
         balance.textContent = "$" + totalBalance;
-        li.remove();
+        balance.className = "text-2xl font-extrabold transition-colors " + (totalBalance >= 0 ? "text-green-400" : "text-red-400");
+        div.remove();
       });
 
-      expenseList.appendChild(li);
+      expenseList.prepend(div);
 
       // Reset form
       expenseForm.reset();
+    });
+
+    // Dark mode toggle
+    darkToggle.addEventListener("click", () => {
+      document.body.classList.toggle("bg-gradient-to-r");
+      document.body.classList.toggle("from-gray-100");
+      document.body.classList.toggle("via-gray-50");
+      document.body.classList.toggle("to-white");
+      document.body.classList.toggle("text-gray-900");
     });
   </script>
 </body>
