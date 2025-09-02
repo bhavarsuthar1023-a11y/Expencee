@@ -8,10 +8,47 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- AOS CSS -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    /* 🔥 Stair-Slider Intro Animation */
+    .stair-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      z-index: 9999;
+    }
+    .stair {
+      flex: 1;
+      background: linear-gradient(to bottom, #2563eb, #1e3a8a);
+      transform: translateY(0);
+      animation: slideUp 1s ease forwards;
+    }
+    .stair:nth-child(1) { animation-delay: 0s; }
+    .stair:nth-child(2) { animation-delay: 0.15s; }
+    .stair:nth-child(3) { animation-delay: 0.3s; }
+    .stair:nth-child(4) { animation-delay: 0.45s; }
+    .stair:nth-child(5) { animation-delay: 0.6s; }
+
+    @keyframes slideUp {
+      to { transform: translateY(-100%); }
+    }
+  </style>
 </head>
 <body class="bg-gradient-to-b from-gray-900 via-gray-800 to-black text-gray-100 scroll-smooth">
+
+  <!-- 🔥 Stair Loader -->
+  <div class="stair-loader">
+    <div class="stair"></div>
+    <div class="stair"></div>
+    <div class="stair"></div>
+    <div class="stair"></div>
+    <div class="stair"></div>
+  </div>
+
   <!-- Navbar -->
-  <header class="fixed w-full top-0 bg-black/40 backdrop-blur-lg border-b border-gray-800 z-50">
+  <header class="fixed w-full top-0 bg-black/30 backdrop-blur-lg border-b border-gray-800 z-40">
     <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
       <h1 class="text-2xl font-bold tracking-wide">John Doe</h1>
       <nav class="hidden md:flex space-x-8 text-sm font-medium">
@@ -25,9 +62,9 @@
 
   <!-- Hero Section -->
   <section class="h-screen flex flex-col md:flex-row items-center justify-center text-center md:text-left gap-10 px-6">
-    <img src="https://images.unsplash.com/photo-1603415526960-f7e0328f0f88?auto=format&fit=crop&w=500&q=80" 
+    <img src="https://images.unsplash.com/photo-1755542366797-b3f036b11310?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0MHx8fGVufDB8fHx8fA%3D%3D" 
       alt="Profile Photo" 
-      class="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-4 border-blue-500 shadow-xl hover:scale-105 transition"
+      class="w-44 h-44 md:w-64 md:h-64 rounded-full object-cover border-4 border-blue-500 shadow-xl hover:scale-105 transition"
       data-aos="zoom-in">
 
     <div data-aos="fade-left">
@@ -56,30 +93,14 @@
   <section id="skills" class="max-w-5xl mx-auto py-20 px-6" data-aos="fade-up">
     <h3 class="text-3xl font-bold mb-8 text-center">Skills</h3>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center">
-        <i data-lucide="file-code" class="mb-2"></i> HTML
-      </div>
-      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center">
-        <i data-lucide="paintbrush" class="mb-2"></i> CSS
-      </div>
-      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center">
-        <i data-lucide="square-code" class="mb-2"></i> JavaScript
-      </div>
-      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center">
-        <i data-lucide="atom" class="mb-2"></i> React
-      </div>
-      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center">
-        <i data-lucide="wind" class="mb-2"></i> Tailwind
-      </div>
-      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center">
-        <i data-lucide="server" class="mb-2"></i> Node.js
-      </div>
-      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center">
-        <i data-lucide="git-branch" class="mb-2"></i> Git
-      </div>
-      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center">
-        <i data-lucide="pen-tool" class="mb-2"></i> UI/UX
-      </div>
+      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center"><i data-lucide="file-code" class="mb-2"></i> HTML</div>
+      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center"><i data-lucide="paintbrush" class="mb-2"></i> CSS</div>
+      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center"><i data-lucide="square-code" class="mb-2"></i> JavaScript</div>
+      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center"><i data-lucide="atom" class="mb-2"></i> React</div>
+      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center"><i data-lucide="wind" class="mb-2"></i> Tailwind</div>
+      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center"><i data-lucide="server" class="mb-2"></i> Node.js</div>
+      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center"><i data-lucide="git-branch" class="mb-2"></i> Git</div>
+      <div class="bg-white/10 p-5 rounded-xl text-center hover:scale-105 transition flex flex-col items-center"><i data-lucide="pen-tool" class="mb-2"></i> UI/UX</div>
     </div>
   </section>
 
@@ -88,28 +109,16 @@
     <h3 class="text-3xl font-bold mb-8 text-center">Projects</h3>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
       <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl overflow-hidden shadow-lg hover:scale-[1.02] transition" data-aos="zoom-in">
-        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" alt="Portfolio Website" class="w-full h-40 object-cover">
-        <div class="p-4">
-          <h4 class="text-xl font-semibold mb-2">Portfolio Website</h4>
-          <p class="text-gray-300 mb-4">A sleek personal portfolio built with Tailwind & JavaScript.</p>
-          <a href="#" class="text-blue-400 hover:underline">View Project →</a>
-        </div>
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" class="w-full h-40 object-cover">
+        <div class="p-4"><h4 class="text-xl font-semibold mb-2">Portfolio Website</h4><p class="text-gray-300 mb-4">A sleek personal portfolio built with Tailwind & JavaScript.</p><a href="#" class="text-blue-400 hover:underline">View Project →</a></div>
       </div>
       <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl overflow-hidden shadow-lg hover:scale-[1.02] transition" data-aos="zoom-in">
-        <img src="https://images.unsplash.com/photo-1523475496153-3d6cc2503d2a?auto=format&fit=crop&w=600&q=80" alt="E-commerce App" class="w-full h-40 object-cover">
-        <div class="p-4">
-          <h4 class="text-xl font-semibold mb-2">E-commerce App</h4>
-          <p class="text-gray-300 mb-4">A responsive online store with cart and checkout features.</p>
-          <a href="#" class="text-blue-400 hover:underline">View Project →</a>
-        </div>
+        <img src="https://images.unsplash.com/photo-1523475496153-3d6cc2503d2a?auto=format&fit=crop&w=600&q=80" class="w-full h-40 object-cover">
+        <div class="p-4"><h4 class="text-xl font-semibold mb-2">E-commerce App</h4><p class="text-gray-300 mb-4">A responsive online store with cart and checkout features.</p><a href="#" class="text-blue-400 hover:underline">View Project →</a></div>
       </div>
       <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl overflow-hidden shadow-lg hover:scale-[1.02] transition" data-aos="zoom-in">
-        <img src="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?auto=format&fit=crop&w=600&q=80" alt="Dashboard UI" class="w-full h-40 object-cover">
-        <div class="p-4">
-          <h4 class="text-xl font-semibold mb-2">Dashboard UI</h4>
-          <p class="text-gray-300 mb-4">A modern admin dashboard with charts and analytics.</p>
-          <a href="#" class="text-blue-400 hover:underline">View Project →</a>
-        </div>
+        <img src="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?auto=format&fit=crop&w=600&q=80" class="w-full h-40 object-cover">
+        <div class="p-4"><h4 class="text-xl font-semibold mb-2">Dashboard UI</h4><p class="text-gray-300 mb-4">A modern admin dashboard with charts and analytics.</p><a href="#" class="text-blue-400 hover:underline">View Project →</a></div>
       </div>
     </div>
   </section>
@@ -148,9 +157,15 @@
   </script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    AOS.init({
-      duration: 1000,
-      once: true,
+    AOS.init({ duration: 1000, once: true });
+  </script>
+
+  <!-- Hide Stair Loader after animation -->
+  <script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.querySelector(".stair-loader").style.display = "none";
+      }, 1500);
     });
   </script>
 </body>
