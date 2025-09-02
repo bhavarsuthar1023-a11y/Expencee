@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-lg">
+    <h1 class="text-2xl font-bold text-center mb-4">💰 Expense Tracker</h1>
+
+    <!-- Balance -->
+    <div class="bg-gray-50 p-4 rounded-xl mb-4 flex justify-between items-center">
+      <span class="text-lg font-medium">Total Balance:</span>
+      <span id="balance" class="text-xl font-bold text-green-600">$0</span>
+    </div>
+
+    <!-- Add Expense Form -->
+    <form id="expense-form" class="space-y-3 mb-6">
+      <input id="desc" type="text" placeholder="Description" 
+        class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
+      
+      <input id="amount" type="number" placeholder="Amount" 
+        class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
+
+      <select id="category" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400">
+        <option>Food</option>
+        <option>Transport</option>
+        <option>Shopping</option>
+        <option>Entertainment</option>
+        <option>Other</option>
+      </select>
+
+      <button type="submit" 
+        class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+        ➕ Add Expense
+      </button>
+    </form>
+
+    <!-- Expense List -->
+    <ul id="expense-list" class="space-y-2"></ul>
+  </div>
+
+  <script>
+    const expenseForm = document.getElementById("expense-form");
+    const expenseList = document.getElementById("expense-list");
+    const balance = document.getElementById("balance");
+
+    let totalBalance = 0;
+
+    expenseForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const desc = document.getElementById("desc").value;
+      const amount = parseFloat(document.getElementById("amount").value);
+      const category = document.getElementById("category").value;
+
+      if (!desc || !amount || amount <= 0) return;
+
+      // Update balance
+      totalBalance += amount;
+      balance.textContent = "$" + totalBalance;
+
+      // Create expense item
+      const li = document.createElement("li");
+      li.className = "flex justify-between items-center bg-gray-50 p-3 rounded-lg shadow-sm";
+
+      li.innerHTML = `
+        <div>
+          <p class="font-medium">${desc}</p>
+          <p class="text-sm text-gray-500">${category}</p>
+        </div>
+        <div class="flex items-center space-x-3">
+          <span class="font-bold text-red-500">-$${amount}</span>
+          <button class="text-red-600 hover:text-red-800 font-bold">✖</button>
+        </div>
+      `;
+
+      // Delete expense
+      li.querySelector("button").addEventListener("click", function() {
+        totalBalance -= amount;
+        balance.textContent = "$" + totalBalance;
+        li.remove();
+      });
+
+      expenseList.appendChild(li);
+
+      // Reset form
+      expenseForm.reset();
+    });
+  </script>
+</body>
+</html>
